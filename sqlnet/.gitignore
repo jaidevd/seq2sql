@@ -7,3 +7,5 @@
 glove/*
 saved_model/*
 !saved_model/.keep
+*.bak
+.ipynb_checkpoints/
