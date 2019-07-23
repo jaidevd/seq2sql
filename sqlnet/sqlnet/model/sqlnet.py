@@ -136,7 +136,6 @@ class SQLNet(nn.Module):
         cond_score = None
 
         # Predict aggregator
-        from ipdb import set_trace; set_trace()  # NOQA
         if self.trainable_emb:
             if pred_agg:
                 x_emb_var, x_len = self.agg_embed_layer.gen_x_batch(q, col)
