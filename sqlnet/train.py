@@ -72,7 +72,7 @@ if __name__ == "__main__":
         )
 
     word_emb = load_word_emb(
-        "glove/glove.%dB.%dd.txt" % (B_word, N_word),
+        "glove/glove.%dB.%dd.npy" % (B_word, N_word),
         load_used=args.train_emb,
         use_small=USE_SMALL,
     )

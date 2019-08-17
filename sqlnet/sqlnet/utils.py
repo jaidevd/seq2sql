@@ -1,6 +1,8 @@
 import json
 from .lib.dbengine import DBEngine
 import numpy as np
+import os
+op = os.path
 
 # from nltk.tokenize import StanfordTokenizer
 
@@ -142,6 +144,7 @@ def best_model_name(args, for_load=False):
 
 
 def to_batch_seq(sql_data, table_data, idxes, st, ed, ret_vis_data=False):
+    from ipdb import set_trace; set_trace()  # NOQA
     q_seq = []
     col_seq = []
     col_num = []
@@ -356,15 +359,19 @@ def epoch_reinforce_train(model, optimizer, batch_size, sql_data, table_data, db
 def load_word_emb(file_name, load_used=False, use_small=False):
     if not load_used:
         print(("Loading word embedding from %s" % file_name))
-        ret = {}
-        with open(file_name) as inf:
-            for idx, line in enumerate(inf):
-                if use_small and idx >= 5000:
-                    break
-                info = line.strip().split(" ")
-                if info[0].lower() not in ret:
-                    ret[info[0]] = np.array([float(x) for x in info[1:]])
-        return ret
+        with open(file_name + '.tokens', 'r') as fout:
+            tokens = [f.rstrip() for f in fout.readlines()]
+        x = np.load(file_name)
+        return {t: x[i] for i, t in enumerate(tokens)}
+        # ret = {}
+        # with open(file_name) as inf:
+        #     for idx, line in enumerate(inf):
+        #         if use_small and idx >= 5000:
+        #             break
+        #         info = line.strip().split(" ")
+        #         if info[0].lower() not in ret:
+        #             ret[info[0]] = np.array([float(x) for x in info[1:]])
+        # return ret
     else:
         print("Load used word embedding")
         with open("glove/word2idx.json") as inf:
